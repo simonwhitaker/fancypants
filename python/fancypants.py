@@ -52,25 +52,27 @@ class Infographic(object):
         # Coords for all of data
         x, y = origin
         w, h = area
-    
+        
         result = []
     
-        for datum in self.data:
+        for i in range(0, len(self.data)):
             is_last = False
             # If there's a threshold and what's left sums to less than the threshold,
             # aggregate all the remaining data under "Others"
             if total < threshold:
                 label, value = ('Others', total)
                 is_last = True
-
             # Otherwise, grab the next datum from data
             else:
-                label, value = datum
+                label, value = self.data[i]
+
+            if i == len(self.data) - 1:
+                is_last = True
     
             # Coords for this panel
             this_x, this_y  = x, y
             this_w, this_h  = w, h
-    
+            
             # If w > h then we'll fix the height to h and set
             # w to a proportion, else do the reverse
             fixed_height = w > h
@@ -89,21 +91,15 @@ class Infographic(object):
                 y       = y + this_h
     
             # Adding the padding...
-            # First of all, the current frame needs its origin indenting accordingly
-            # (and we need to tweak width and height too, to compensate)
-            this_x += padding
-            this_y += padding
-            this_w -= padding
-            this_h -= padding
-    
             # If we're working on a fixed height, reduce the height by another 1 * padding
             # If we're working on a fixed width, reduce the width likewise
             # Special case: if this is the last frame, reduce both
-            if fixed_height is True or len(self.data) == 0:
-                this_h -= padding
-            if fixed_height is False or len(self.data) == 0:
+            if fixed_height is True and not is_last:
                 this_w -= padding
-    
+
+            if fixed_height is False and not is_last:
+                this_h -= padding
+
             # Sanity check: did we end up rendering a negative-sized frame?
             if this_w < 0:
                 this_w = 0
@@ -118,14 +114,14 @@ class Infographic(object):
                 'width':    this_w,
                 'height':   this_h
             }
-            result = [this_frame] + result
+            result = result + [this_frame]
             if is_last:
                 break
         
         return result
 
 if __name__ == '__main__':
-    ig = Infographic([('foo',45),('bar',55)])
-    frames = ig.get_frames((500,300))
+    ig = Infographic([('foo',150),('bar',50)])
+    frames = ig.get_frames((400,200), padding=5)
     for f in frames:
         print f
