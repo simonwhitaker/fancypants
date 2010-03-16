@@ -1,38 +1,65 @@
-class Infographic(object):
-    """docstring for Infographic"""
+class Area(object):
+    def __init__(self, width, height):
+        super(Area, self).__init__()
+        self.width = width
+        self.height = height
+
+class Point(object):
+    def __init__(self, x, y):
+        super(Point, self).__init__()
+        self.x = x
+        self.y = y
+
+class Frame(object):
+    def __init__(self, label, value, origin, area):
+        super(Frame, self).__init__()
+        self.label = label
+        self.value = value
+        self.origin = origin
+        self.area = area
+    
+    @property
+    def width(self):
+        return self.area.width
+    
+    @property
+    def height(self):
+        return self.area.height
+    
+    @property
+    def x(self):
+        return self.origin.x
+    
+    @property
+    def y(self):
+        return self.origin.y
+    
+    def __str__(self):
+        return "%s (%s): (%s, %s), (%s, %s)" % (self.value, self.label, self.origin.x, self.origin.y, self.area.width, self.area.height)
+
+class Dataset(object):
     def __init__(self, data):
         """
         Arguments:
-            data:      a list of (string, number) tuples
+            data: a list of (string, number) tuples
         """
-        super(Infographic, self).__init__()
+        super(Dataset, self).__init__()
         self.data = data
         
         # Sort the data, largest to smallest
         self.data.sort(cmp=lambda a,b: cmp(b[1], a[1]))
-
-
-    def get_frames(self, area, origin=(0,0), padding=0, threshold=0):
+    
+    def treemap(self, area, origin=Point(0,0), padding=0, threshold=0):
         """
-        get_frames: return a list of data tuples for an X-O-GRAM-style
-        infographic.
-
+        treemap: returns a set of Frame objects that describe a treemap
+        
         Arguments:
-            area:      a tuple containing (width, height) of area to fill with infographic
-            origin:    a tuple containing (x, y) coordinates of area to fill (defaults to 0,0)
-            padding:   padding between the frames in the infographic (defaults to 0)
+            area:      An Area object, describing the size of the treemap
+            origin:    A Point object, describing the origin of the treemap in 2D space
+            padding:   padding between the frames in the treemap (defaults to 0)
             threshold: if total < threshold, aggregate all remaining values into an "other" frame 
     
-        Return value is a list of dictionaries:
-    
-            {
-                'label'  : string,
-                'value'  : number,
-                'x'      : number,
-                'y'      : number,
-                'width'  : number,
-                'height' : number,
-            }
+        Return value is a list of Frames:
         """
     
         # TODO:
@@ -50,8 +77,8 @@ class Infographic(object):
                 raise ValueError("All data must contain positive values (%s, %.2f)" % (datum[0], datum[1]))
     
         # Coords for all of data
-        x, y = origin
-        w, h = area
+        x, y = origin.x, origin.y
+        w, h = area.width, area.height
         
         result = []
     
@@ -65,7 +92,7 @@ class Infographic(object):
             # Otherwise, grab the next datum from data
             else:
                 label, value = self.data[i]
-
+    
             if i == len(self.data) - 1:
                 is_last = True
     
@@ -93,27 +120,20 @@ class Infographic(object):
             # Adding the padding...
             # If we're working on a fixed height, reduce the height by another 1 * padding
             # If we're working on a fixed width, reduce the width likewise
-            # Special case: if this is the last frame, reduce both
+            # Special case: if this is the last frame, reduce neither
             if fixed_height is True and not is_last:
                 this_w -= padding
-
+            
             if fixed_height is False and not is_last:
                 this_h -= padding
-
+            
             # Sanity check: did we end up rendering a negative-sized frame?
             if this_w < 0:
                 this_w = 0
             if this_h < 0:
                 this_h = 0
-    
-            this_frame = {
-                'label':    label, 
-                'value':    value, 
-                'x':        this_x, 
-                'y':        this_y, 
-                'width':    this_w,
-                'height':   this_h
-            }
+            
+            this_frame = Frame(label=label, value=value, origin=Point(this_x, this_y), area=Area(this_w, this_h))
             result = result + [this_frame]
             if is_last:
                 break
@@ -121,7 +141,7 @@ class Infographic(object):
         return result
 
 if __name__ == '__main__':
-    ig = Infographic([('foo',150),('bar',50)])
-    frames = ig.get_frames((400,200), padding=5)
+    ig = Dataset([('foo',50),('bar',50)])
+    frames = ig.treemap(Area(300,200), padding=0)
     for f in frames:
-        print f
+        print f.label, f.value, f.x, f.y, f.width, f.height
