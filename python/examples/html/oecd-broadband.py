@@ -52,15 +52,17 @@ frames = ig.treemap(Area(640,480), origin=Point(20,20), padding=1, threshold=400
 
 with open("oecd-broadband.html", "w") as f:
 
-    f.write("""
-<html>
+    f.write("""<html>
 <head>
-    <title>Test</title>
+    <title>fancypants example: OECD broadband subscriptions</title>
     <style>
-        @import url('eocd-broadband.css');
+        @import url('oecd-broadband.css');
     </style>
 </head>
-<body>""")
+<body>
+<p>Broadband subscribers (millions) per OECD country. Data source: <a href="http://www.guardian.co.uk/news/datablog/2009/may/20/broadband-internetphonesbroadband">Guardian Datablog</a>. Created using <a href="http://github.com/simonwhitaker/fancypants">fancypants</a></p>
+<div style="position:relative">
+""")
 
     for frame in frames:
         f.write("""<div class='frame %s' style='position: absolute; top: %ipx; left: %ipx; width: %ipx; height: %ipx'>
@@ -81,4 +83,4 @@ with open("oecd-broadband.html", "w") as f:
             )
         )
 
-    f.write("</body></html>")
+    f.write("</div></body></html>")
