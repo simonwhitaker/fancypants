@@ -1,0 +1,36 @@
+* {
+    font-family: Helvetica, sans-serif;
+}
+
+.frame {
+    border-radius: 4px;
+	-moz-border-radius: 4px; 
+	-webkit-border-radius: 4px;
+	padding: 0px;
+	background-color: #888;
+}
+
+/* Continent-specific styles */
+.Europe                         { background-color: #090; }
+.Asia                           { background-color: #c00; }
+.North_America                  { background-color: #00b; }
+.South_America                  { background-color: #cc0; }
+.Australia                      { background-color: #c0c; }
+
+/* Country-specific styles */
+.Europe.United_Kingdom          { background-color: #6c0; }
+
+div.text {
+    padding: 2px 4px;
+    background-color: transparent;
+}
+
+.value { 
+    color: white; 
+    font-weight: bold; 
+    font-size: 22px;
+}
+.label { 
+    font-size: 11px;
+    color: #eee; 
+}
