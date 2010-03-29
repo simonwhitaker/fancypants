@@ -1,7 +1,6 @@
 fancypants: a library of data visualisation trinkets
 
-Currently there's only a python library, and only one class
-(Infographic). More may follow.
+Currently there's only a python library. More may follow.
 
 The software is free, in all senses of the word. For further
 details see UNLICENSE
