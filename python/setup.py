@@ -2,7 +2,7 @@ from distutils.core import setup
 
 setup(
     name            = 'fancypants',
-    version         = '1.3',
+    version         = '1.4',
     py_modules      = ['fancypants'],
     url             = 'http://netcetera.org/',
     author          = 'Simon Whitaker',

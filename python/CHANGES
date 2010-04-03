@@ -1,3 +1,5 @@
 1.3   	Added support for nested data structures
 		Made everything a bit more OO
 		Added examples
+
+1.4		Renamed Area class to Rect
