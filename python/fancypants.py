@@ -37,7 +37,6 @@ class Frame(object):
     def __str__(self):
         return "%s (%s): (%s, %s), (%s, %s)" % (self.value, self.label, self.origin.x, self.origin.y, self.area.width, self.area.height)
 
-
 class BaseData(object):
     """Base class for data objects"""
     def __init__(self):
@@ -51,7 +50,7 @@ class BaseData(object):
     
     def get_label(self):
         return self.label
-    
+
 class DataPoint(BaseData):
     """docstring for DataPoint"""
     def __init__(self, value, label=None):
@@ -65,7 +64,7 @@ class DataPoint(BaseData):
     
     def get_total(self):
         return self.value
-
+    
     def get_value(self):
         return self.value
 
@@ -77,7 +76,7 @@ class Dataset(object):
         self.total = None
         
         # print "Dataset ctor called with %s, %s" % (data, label)
-
+        
         for datum in data:
             (label, value) = datum
             if self.label and label:
@@ -90,11 +89,11 @@ class Dataset(object):
         
         # Sort the data, largest to smallest
         self.sort()
-
+    
     def sort(self):
         # Sort the data, largest to smallest
         self.data.sort(cmp=lambda a,b: cmp(b.get_total(), a.get_total()))
-
+    
     def _append_data(self, data):
         self.data.append(data)
         # Unset total so it gets recalculated on next call to get_total
@@ -111,7 +110,6 @@ class Dataset(object):
                 total += datum.get_total()
             self.total = total
         return self.total
-
     
     def treemap(self, area, origin=Point(0,0), padding=0, threshold=0, flat=True):
         """
@@ -154,7 +152,6 @@ class Dataset(object):
             # aggregate all the remaining data under "Others"
             # print "checking threshold, comparing %i < %i" % (total, threshold)
             if total < threshold:
-                # print "hit the threshold"
                 label_tokens = datum.label.split('.')
                 label_tokens[-1] = 'Others'
                 label = '.'.join(label_tokens)
@@ -216,6 +213,7 @@ class Dataset(object):
                 break
         
         return result
+
 
 if __name__ == '__main__':
     ig = Dataset(
