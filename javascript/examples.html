@@ -38,15 +38,13 @@
     var foo;
     function draw_examples() {
       var data = [
-        ['Alice', 30],
+        ['Alice', 50],
         ['Bob', 20],
-        ['Cath', 15]
+        ['Cath', 10]
       ];
       var e1      = document.getElementById('example1');
-      // var w       = parseInt(e1.style.width);
-      // var h       = parseInt(e1.style.height);
-      var w       = 600;
-      var h       = 400;
+      var w       = parseInt(window.getComputedStyle(e1, null).getPropertyValue('width'));
+      var h       = parseInt(window.getComputedStyle(e1, null).getPropertyValue('height'));
       var ds      = new Dataset(data);
       var area    = new Area(w, h);
       var origin  = new Point(0, 0);
