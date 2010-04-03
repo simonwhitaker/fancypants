@@ -1,6 +1,6 @@
-class Area(object):
+class Rect(object):
     def __init__(self, width, height):
-        super(Area, self).__init__()
+        super(Rect, self).__init__()
         self.width = width
         self.height = height
 
@@ -116,7 +116,7 @@ class Dataset(object):
         treemap: returns a set of Frame objects that describe a treemap
         
         Arguments:
-            area:      An Area object, describing the size of the treemap
+            area:      A Rect object, describing the size of the treemap
             origin:    A Point object, describing the origin of the treemap in 2D space
             padding:   padding between the frames in the treemap (defaults to 0)
             threshold: if total < threshold, aggregate all remaining values into an "other" frame 
@@ -199,7 +199,7 @@ class Dataset(object):
                 this_h = 0
             
             origin = Point(this_x, this_y)
-            area   = Area(this_w, this_h)
+            area   = Rect(this_w, this_h)
             
             if (isinstance(datum, DataPoint)):
                 result.append(Frame(label=datum.label, value=datum.value, origin=origin, area=area))
@@ -230,13 +230,13 @@ if __name__ == '__main__':
             ])
         ]
     )
-    frames = ig.treemap(Area(300,200), padding=0)
+    frames = ig.treemap(Rect(300,200), padding=0)
     for f in frames:
         print f
 
     print "-------------------------"
 
     ig.append_data(DataPoint(110, 'blah'))
-    frames = ig.treemap(Area(300,200), padding=0)
+    frames = ig.treemap(Rect(300,200), padding=0)
     for f in frames:
         print f

@@ -1,4 +1,4 @@
-from fancypants import Area, Dataset, Point
+from fancypants import Rect, Dataset, Point
 import unittest
 
 class TestDataset(unittest.TestCase):
@@ -14,7 +14,7 @@ class TestDataset(unittest.TestCase):
     
     def testTreeMap(self):
         data = [('a', 100), ('b', 150), ('c', 250)]
-        area = Area(300,200)
+        area = Rect(300,200)
 
         # will generate a treemap like this:
         # 
@@ -56,7 +56,7 @@ class TestDataset(unittest.TestCase):
             ('a', [('p', 10),  ('q', 40)]),
             ('b', [('r', 150), ('s', 50)])
         ]
-        area = Area(250,200)
+        area = Rect(250,200)
 
         # will generate a treemap like this:
         # 

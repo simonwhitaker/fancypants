@@ -1,4 +1,4 @@
-function Area(width, height) {
+function Rect(width, height) {
     this.width = width;
     this.height = height;
 }
@@ -175,7 +175,7 @@ Dataset.prototype.treemap = function(area, origin, padding, threshold, flat) {
         }
         
         origin = new Point(this_x, this_y);
-        area   = new Area(this_w, this_h);
+        area   = new Rect(this_w, this_h);
         
         if (datum instanceof DataPoint) {
             result.push(new Frame(datum.label, datum.value, origin, area));

@@ -31,7 +31,7 @@
 		function test () {
 			output = document.getElementById('output');
 			try {
-				testArea();
+				testRect();
 				testPoint();
 				testFrame();
 				testBaseData();
@@ -46,12 +46,12 @@
 			}
 		}
 		
-		function testArea() {
+		function testRect() {
 			var width = 3;
 			var height = 4.4;
-			var a = new Area(width, height);
-			assert(a.width == width, "Area.width property matches what was set");
-			assert(a.height == height, "Area.height property matches what was set");
+			var a = new Rect(width, height);
+			assert(a.width == width, "Rect.width property matches what was set");
+			assert(a.height == height, "Rect.height property matches what was set");
 		}
 		function testPoint() {
 			var x = 5.1;
@@ -64,7 +64,7 @@
 			var label  = "foo";
 			var value  = 200;
 			var origin = new Point(1, 2);
-			var area   = new Area(3, 4);
+			var area   = new Rect(3, 4);
 			var f      = new Frame(label, value, origin, area);
 			assert(f.label == label, "Frame.label property matches what was set");
 			assert(f.value == value, "Frame.value property matches what was set");
@@ -123,7 +123,7 @@
 			
 			var treemap = [];
 			var error;
-			var area 			= new Area(600, 400);
+			var area 			= new Rect(600, 400);
 			var origin 		= new Point(0, 0);
 			var padding 	= 1;
 			var threshold = 5;

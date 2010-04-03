@@ -1,4 +1,4 @@
-from fancypants import Dataset, Area, Point
+from fancypants import Dataset, Rect, Point
 
 # Example: OECD data on broadband subscriber statistics
 # http://www.guardian.co.uk/news/datablog/2009/may/20/broadband-internetphonesbroadband
@@ -48,7 +48,7 @@ data = [
 
 ig = Dataset(data)
 
-frames = ig.treemap(Area(640,480), origin=Point(20,20), padding=1, threshold=40000000)
+frames = ig.treemap(Rect(600,420), origin=Point(0,0), padding=1, threshold=40000000)
 
 with open("oecd-broadband.html", "w") as f:
 

@@ -46,7 +46,7 @@
       var w       = parseInt(window.getComputedStyle(e1, null).getPropertyValue('width'));
       var h       = parseInt(window.getComputedStyle(e1, null).getPropertyValue('height'));
       var ds      = new Dataset(data);
-      var area    = new Area(w, h);
+      var area    = new Rect(w, h);
       var origin  = new Point(0, 0);
       var tm      = ds.treemap(area, origin, 1);
       
