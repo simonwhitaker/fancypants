@@ -1,0 +1,86 @@
+<html>
+<head>
+  <meta http-equiv="Content-type" content="text/html; charset=utf-8">
+  <title>fancypants examples</title>
+  <style type="text/css" media="screen">
+    * {
+      font-family: Helvetica, sans-serif;
+      font-size: 13px;
+    }
+    #example1 {
+      width: 600px;
+      height: 400px;
+      position: relative;
+    }
+    .frame {
+      border-radius: 4px;
+      -moz-border-radius: 4px; 
+      -webkit-border-radius: 4px;
+      background-color: #555;
+    }
+    .Alice  { background-color: #c22; }
+    .Bob    { background-color: #a22; }
+    .Cath   { background-color: #822; }
+    .content {
+      padding: 10px;
+    }
+    .label {
+      color: white;
+    }
+    .value {
+      color: white;
+      font-size: 30px;
+      font-weight: bold;
+    }
+  </style>
+  <script type="text/javascript" charset="utf-8" src="fancypants.js"></script>
+  <script type="text/javascript" charset="utf-8">
+    var foo;
+    function draw_examples() {
+      var data = [
+        ['Alice', 30],
+        ['Bob', 20],
+        ['Cath', 15]
+      ];
+      var e1      = document.getElementById('example1');
+      // var w       = parseInt(e1.style.width);
+      // var h       = parseInt(e1.style.height);
+      var w       = 600;
+      var h       = 400;
+      var ds      = new Dataset(data);
+      var area    = new Area(w, h);
+      var origin  = new Point(0, 0);
+      var tm      = ds.treemap(area, origin, 1);
+      
+      for (var i = 0; i < tm.length; i++) {
+        var frame = tm[i];
+        var div = document.createElement('div');
+        div.style.position = "absolute";
+        div.className     = "frame " + frame.label;
+        div.style.width   = frame.area.width;
+        div.style.height  = frame.area.height;
+        div.style.left    = frame.origin.x;
+        div.style.top     = frame.origin.y;
+        e1.appendChild(div);
+        
+        var content = document.createElement('div');
+        content.className = 'content';
+        div.appendChild(content);
+
+        var val = document.createElement('div');
+        val.className = 'value';
+        val.innerHTML = frame.value;
+        content.appendChild(val);
+
+        var lbl = document.createElement('div');
+        lbl.className = 'label';
+        lbl.innerHTML = frame.label;
+        content.appendChild(lbl);
+      }
+    }
+  </script>
+</head>
+<body id="examples" onload="draw_examples()">
+  <div id="example1"></div>
+</body>
+</html>
