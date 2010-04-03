@@ -1,145 +1,145 @@
 <html>
 <head>
-	<meta http-equiv="Content-type" content="text/html; charset=utf-8">
-	<title>fancypants JS test</title>
-	<style type="text/css" media="screen">
-		#output {
-			font-family: Menlo, Monaco, "Courier New", monospace;
-			padding: 8px 12px;
-			font-size: 12px;
-			border: 1px solid #0c0;
-			background-color: #cfc;
-		}
-	</style>
-	<script type="text/javascript" charset="utf-8" src="fancypants.js"></script>
-	<script type="text/javascript" charset="utf-8">
-		var assertCount = 0;
-		var output;
-	
-		function AssertException(message) { this.message = message; }
-		AssertException.prototype.toString = function () {
-		  return 'AssertException: ' + this.message;
-		}
-		function assert(exp, message) {
-			assertCount++;
-		  if (!exp) {
-		    throw new AssertException(message);
-		  } else {
-				output.innerHTML = output.innerHTML + assertCount + ': ' + message + '<br/>';
-			}
-		}
-		function test () {
-			output = document.getElementById('output');
-			try {
-				testRect();
-				testPoint();
-				testFrame();
-				testBaseData();
-				testDataPoint();
-				testDataset();
-				
-				output.innerHTML = output.innerHTML + '<strong>' + assertCount + ' tests ran OK</strong>';
-			} catch (e) {
-				output.style.border = "1px solid #c00";
-				output.style.backgroundColor = "#fcc";
-				output.innerHTML = output.innerHTML + '<strong>' + e + '</strong>';
-			}
-		}
-		
-		function testRect() {
-			var width = 3;
-			var height = 4.4;
-			var a = new Rect(width, height);
-			assert(a.width == width, "Rect.width property matches what was set");
-			assert(a.height == height, "Rect.height property matches what was set");
-		}
-		function testPoint() {
-			var x = 5.1;
-			var y = 7.2;
-			var p = new Point(x, y);
-			assert(p.x == x, "Point.x property matches what was set");
-			assert(p.y == y, "Point.y property matches what was set");
-		}
-		function testFrame() {
-			var label  = "foo";
-			var value  = 200;
-			var origin = new Point(1, 2);
-			var area   = new Rect(3, 4);
-			var f      = new Frame(label, value, origin, area);
-			assert(f.label == label, "Frame.label property matches what was set");
-			assert(f.value == value, "Frame.value property matches what was set");
-			assert(f.origin == origin, "Frame.origin property matches what was set");
-			assert(f.area == area, "Frame.area property matches what was set");
-		}
-		function testBaseData() {
-			var bd = new BaseData();
-			var error;
-			try {
-				bd.get_total();
-			} catch (e) {
-				error = e;
-			}
-			assert(error != null, "BaseData.get_total() throws error");
- 		}
-		function testDataPoint() {
-			var label = "bar";
-			var values = [-1, 0, 1];
-			
-			for (var i = 0; i < values.length; i++) {
-				var value = values[i];
-				var error = null;
-				try {
-					var dp = new DataPoint(value, label);
-					assert(dp.value == value, "DataPoint.value returns what has been set");
-					assert(dp.get_value() == value, "DataPoint.get_value() returns what has been set");
-					assert(dp.get_total() == value, "DataPoint.get_total() returns what has been set");
-					assert(dp.get_label() == label, "DataPoint.get_label() returns what has been set");
-				} catch (e) {
-					error = e;
-				}
-				assert(error == null || value < 0, "DataPoint: Values < 0 throw error, >= 0 are OK");
-			}
-			
-		}
-		function testDataset() {
-			var data = [
-				['foo', 40],
-				['bar', 
-					[
-						['a', 5],
-						['b', 15],
-					],
-				],
-			];
-			var label = 'foo';
-			var ds = new Dataset(data, label);
-			assert(ds.get_total() == 60, "Dataset.get_total() returns sum of all DataPoint totals");
-			
-			ds.sort();
-			for (var i = 1; i < ds.data.length; i++) {
-				assert(ds.data[i].get_total() < ds.data[i-1].get_total(), "Dataset.sort sorts in descending order");
-			}
-			var temp = 0;
-			
-			var treemap = [];
-			var error;
-			var area 			= new Rect(600, 400);
-			var origin 		= new Point(0, 0);
-			var padding 	= 1;
-			var threshold = 5;
-			var flat 			= true;
-			try {
-				treemap = ds.treemap(area, origin, padding, threshold, flat);
-			} catch (e) {
-				alert(e);
-				error = e;
-			}
-			assert(error == null, "Dataset.treemap() doesn't die");
-			assert(treemap.length == 3, "Dataset.treemap() returns correct number of frames");
-		}
-	</script>
+  <meta http-equiv="Content-type" content="text/html; charset=utf-8">
+  <title>fancypants JS test</title>
+  <style type="text/css" media="screen">
+    #output {
+      font-family: Menlo, Monaco, "Courier New", monospace;
+      padding: 8px 12px;
+      font-size: 12px;
+      border: 1px solid #0c0;
+      background-color: #cfc;
+    }
+  </style>
+  <script type="text/javascript" charset="utf-8" src="fancypants.js"></script>
+  <script type="text/javascript" charset="utf-8">
+    var assertCount = 0;
+    var output;
+  
+    function AssertException(message) { this.message = message; }
+    AssertException.prototype.toString = function () {
+      return 'AssertException: ' + this.message;
+    }
+    function assert(exp, message) {
+      assertCount++;
+      if (!exp) {
+        throw new AssertException(message);
+      } else {
+        output.innerHTML = output.innerHTML + assertCount + ': ' + message + '<br/>';
+      }
+    }
+    function test () {
+      output = document.getElementById('output');
+      try {
+        testRect();
+        testPoint();
+        testFrame();
+        testBaseData();
+        testDataPoint();
+        testDataset();
+        
+        output.innerHTML = output.innerHTML + '<strong>' + assertCount + ' tests ran OK</strong>';
+      } catch (e) {
+        output.style.border = "1px solid #c00";
+        output.style.backgroundColor = "#fcc";
+        output.innerHTML = output.innerHTML + '<strong>' + e + '</strong>';
+      }
+    }
+    
+    function testRect() {
+      var width = 3;
+      var height = 4.4;
+      var a = new Rect(width, height);
+      assert(a.width == width, "Rect.width property matches what was set");
+      assert(a.height == height, "Rect.height property matches what was set");
+    }
+    function testPoint() {
+      var x = 5.1;
+      var y = 7.2;
+      var p = new Point(x, y);
+      assert(p.x == x, "Point.x property matches what was set");
+      assert(p.y == y, "Point.y property matches what was set");
+    }
+    function testFrame() {
+      var label  = "foo";
+      var value  = 200;
+      var origin = new Point(1, 2);
+      var area   = new Rect(3, 4);
+      var f      = new Frame(label, value, origin, area);
+      assert(f.label == label, "Frame.label property matches what was set");
+      assert(f.value == value, "Frame.value property matches what was set");
+      assert(f.origin == origin, "Frame.origin property matches what was set");
+      assert(f.area == area, "Frame.area property matches what was set");
+    }
+    function testBaseData() {
+      var bd = new BaseData();
+      var error;
+      try {
+        bd.get_total();
+      } catch (e) {
+        error = e;
+      }
+      assert(error != null, "BaseData.get_total() throws error");
+    }
+    function testDataPoint() {
+      var label = "bar";
+      var values = [-1, 0, 1];
+      
+      for (var i = 0; i < values.length; i++) {
+        var value = values[i];
+        var error = null;
+        try {
+          var dp = new DataPoint(value, label);
+          assert(dp.value == value, "DataPoint.value returns what has been set");
+          assert(dp.get_value() == value, "DataPoint.get_value() returns what has been set");
+          assert(dp.get_total() == value, "DataPoint.get_total() returns what has been set");
+          assert(dp.get_label() == label, "DataPoint.get_label() returns what has been set");
+        } catch (e) {
+          error = e;
+        }
+        assert(error == null || value < 0, "DataPoint: Values < 0 throw error, >= 0 are OK");
+      }
+      
+    }
+    function testDataset() {
+      var data = [
+        ['foo', 40],
+        ['bar', 
+          [
+            ['a', 5],
+            ['b', 15],
+          ],
+        ],
+      ];
+      var label = 'foo';
+      var ds = new Dataset(data, label);
+      assert(ds.get_total() == 60, "Dataset.get_total() returns sum of all DataPoint totals");
+      
+      ds.sort();
+      for (var i = 1; i < ds.data.length; i++) {
+        assert(ds.data[i].get_total() < ds.data[i-1].get_total(), "Dataset.sort sorts in descending order");
+      }
+      var temp = 0;
+      
+      var treemap = [];
+      var error;
+      var area      = new Rect(600, 400);
+      var origin    = new Point(0, 0);
+      var padding   = 1;
+      var threshold = 5;
+      var flat      = true;
+      try {
+        treemap = ds.treemap(area, origin, padding, threshold, flat);
+      } catch (e) {
+        alert(e);
+        error = e;
+      }
+      assert(error == null, "Dataset.treemap() doesn't die");
+      assert(treemap.frames.length == 3, "Dataset.treemap() returns correct number of frames");
+    }
+  </script>
 </head>
 <body id="test" onload="test()">
-<div id="output"></div>	
+<div id="output"></div> 
 </body>
 </html>

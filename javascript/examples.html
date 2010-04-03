@@ -8,9 +8,15 @@
       font-size: 13px;
     }
     #example1 {
-      width: 600px;
-      height: 400px;
+      width: 500px;
+      height: 360px;
       position: relative;
+    }
+    #example2 {
+      width: 500px;
+      height: 360px;
+      position: relative;
+      margin-top: 20px;
     }
     .frame {
       border-radius: 4px;
@@ -18,9 +24,10 @@
       -webkit-border-radius: 4px;
       background-color: #555;
     }
-    .Alice  { background-color: #c22; }
-    .Bob    { background-color: #a22; }
-    .Cath   { background-color: #822; }
+    .Alice  { background-color: #a00; }
+    .Bob    { background-color: #090; }
+    .Cath   { background-color: #009; }
+    
     .content {
       padding: 10px;
     }
@@ -35,50 +42,33 @@
   </style>
   <script type="text/javascript" charset="utf-8" src="fancypants.js"></script>
   <script type="text/javascript" charset="utf-8">
-    var foo;
     function draw_examples() {
       var data = [
         ['Alice', 50],
         ['Bob', 20],
         ['Cath', 10]
       ];
-      var e1      = document.getElementById('example1');
-      var w       = parseInt(window.getComputedStyle(e1, null).getPropertyValue('width'));
-      var h       = parseInt(window.getComputedStyle(e1, null).getPropertyValue('height'));
-      var ds      = new Dataset(data);
-      var area    = new Rect(w, h);
-      var origin  = new Point(0, 0);
-      var tm      = ds.treemap(area, origin, 1);
-      
-      for (var i = 0; i < tm.length; i++) {
-        var frame = tm[i];
-        var div = document.createElement('div');
-        div.style.position = "absolute";
-        div.className     = "frame " + frame.label;
-        div.style.width   = frame.area.width;
-        div.style.height  = frame.area.height;
-        div.style.left    = frame.origin.x;
-        div.style.top     = frame.origin.y;
-        e1.appendChild(div);
-        
-        var content = document.createElement('div');
-        content.className = 'content';
-        div.appendChild(content);
+      var ds1 = new Dataset(data);
+      ds1.treemap_in_element('example1', 1);
 
-        var val = document.createElement('div');
-        val.className = 'value';
-        val.innerHTML = frame.value;
-        content.appendChild(val);
-
-        var lbl = document.createElement('div');
-        lbl.className = 'label';
-        lbl.innerHTML = frame.label;
-        content.appendChild(lbl);
-      }
+      data = [
+        ['Alice', [
+          ['Debra', 30],
+          ['Emily', 20],
+        ]],
+        ['Bob', [
+          ['Fred', 8],
+          ['George', 12],
+        ]],
+        ['Cath', 10]
+      ];
+      var ds2 = new Dataset(data);
+      ds2.treemap_in_element('example2', 1);
     }
   </script>
 </head>
 <body id="examples" onload="draw_examples()">
   <div id="example1"></div>
+  <div id="example2"></div>
 </body>
 </html>
